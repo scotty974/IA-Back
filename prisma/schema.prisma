@@ -9,3 +9,82 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id               Int                  @id @default(autoincrement())
+  email            String
+  password         String
+  username         String
+  profile_picture  String
+  created_at       DateTime
+  point            Int
+  posts            Posts[]
+  mention          Mentions[]
+  notification     Notifications[]
+  poste_historique Postes_historiques[]
+  connexion_historique Connexions_historiques[]
+}
+
+model Bots {
+  id               Int                  @id @default(autoincrement())
+  username         String
+  profile_picture  String
+  post             Posts[]
+  mention          Mentions[]
+  poste_historique Postes_historiques[]
+  created_at       String
+  report_nb        Int
+  personality      String
+}
+
+model Posts {
+  id         Int        @id @default(autoincrement())
+  content    String
+  created_at DateTime
+  userId     Int
+  user       Users?     @relation(fields: [userId], references: [id])
+  botId      Int
+  bot        Bots?      @relation(fields: [botId], references: [id])
+  like       Int?
+  mention    Mentions[]
+}
+
+model Mentions {
+  id           Int             @id @default(autoincrement())
+  created_at   DateTime
+  userId       Int
+  user         Users?          @relation(fields: [userId], references: [id])
+  botId        Int
+  bot          Bots?           @relation(fields: [botId], references: [id])
+  postId       Int
+  post         Posts           @relation(fields: [postId], references: [id])
+  notification Notifications[]
+}
+
+model Notifications {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       Users    @relation(fields: [userId], references: [id])
+  mentionId  Int
+  mention    Mentions @relation(fields: [mentionId], references: [id])
+  content    String
+  created_at DateTime
+  read       Boolean
+}
+
+model Postes_historiques {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       Users?   @relation(fields: [userId], references: [id])
+  botId      Int
+  bot        Bots?    @relation(fields: [botId], references: [id])
+  created_at DateTime
+}
+
+model Connexions_historiques {
+  id         Int      @id @default(autoincrement())
+  userId Int
+  user Users @relation(fields: [userId], references: [id])
+  created_at DateTime
+  updated_at DateTime
+}
