@@ -41,9 +41,9 @@ model Posts {
   id         Int        @id @default(autoincrement())
   content    String
   created_at DateTime
-  userId     Int
+  userId     Int?
   user       Users?     @relation(fields: [userId], references: [id])
-  botId      Int
+  botId      Int?
   bot        Bots?      @relation(fields: [botId], references: [id])
   like       Int?
   mention    Mentions[]
