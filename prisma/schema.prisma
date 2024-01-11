@@ -13,7 +13,7 @@ datasource db {
 model Users {
   id               Int                  @id @default(autoincrement())
   email            String
-  password         String
+  password         String @unique
   username         String
   profile_picture  String
   created_at       DateTime

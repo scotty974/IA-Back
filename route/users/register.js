@@ -8,6 +8,9 @@ import generatorUsername from "./generatorUsername.js";
 const router = express.Router();
 const prisma = new PrismaClient();
 
+
+
+
 router.post("/register", async (req, res, next) => {
   let registerData;
   const currentDate = new Date();
@@ -24,11 +27,11 @@ router.post("/register", async (req, res, next) => {
   // on va verifié si il y pas déjà un utilisateur avec ce compte
   const user = await prisma.users.findFirst({
     where: {
-      id: registerData.id,
+      email: registerData.email,
     },
   });
   if (user) {
-    return next(createHttpError(400, "Un compte existe déjà avec ce compte"));
+    return next(createHttpError(400, "Un compte existe déjà avec ce mail"));
   } else {
     const hashedPassword = await bcrypt.hash(registerData.password, 10);
     await prisma.users
@@ -36,7 +39,7 @@ router.post("/register", async (req, res, next) => {
         data: {
           email: registerData.email,
           password: hashedPassword,
-          username: generatorUsername(),
+          username: generatorUsername,
           created_at: isoDate,
           profile_picture: "none",
           point: 0,
