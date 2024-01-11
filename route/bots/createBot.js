@@ -2,6 +2,7 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import generatorUsername from "../users/generatorUsername.js";
 import getRandomPersonality from "./PersonalityGenerator.js";
+
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -12,7 +13,7 @@ router.post("/bot", async (req, res, next) => {
     const bot = await prisma.bots.create({
       data: {
         username: generatorUsername,
-        profile_picture: "none",
+        profile_picture: 'none',
         created_at: isoDate,
         personality: getRandomPersonality(),
         report_nb: 0,
@@ -20,7 +21,7 @@ router.post("/bot", async (req, res, next) => {
     });
     res.json(bot);
   } catch (error) {
-    console.log("impossible de crée le bot");
+    console.log(error);
   }
 });
 

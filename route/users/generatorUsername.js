@@ -1,8 +1,8 @@
-import {generateUsername } from "unique-username-generator";
+import {uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
 
 function generatorUsername(){
-    const username = generateUsername()
-    return username
+    const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals], length : 2 });
+    return randomName
 }
 
 export default generatorUsername()
