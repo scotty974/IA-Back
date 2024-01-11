@@ -20,7 +20,7 @@ router.post("/bot", async (req, res, next) => {
     });
     res.json(bot);
   } catch (error) {
-    console.log("impossible de crée le bote");
+    console.log("impossible de crée le bot");
   }
 });
 
