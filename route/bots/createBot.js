@@ -7,8 +7,11 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/bot", async (req, res, next) => {
+  // une constante qui recupere la date du jour
   const currentDate = new Date();
+  // il va transformé la date du jour
   const isoDate = currentDate.toISOString();
+  // une route qui va permettre la création de bot
   try {
     const bot = await prisma.bots.create({
       data: {

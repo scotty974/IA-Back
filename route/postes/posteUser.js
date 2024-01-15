@@ -11,17 +11,19 @@ const auth = expressjwt({
   secret: process.env["JWT_KEY"],
   algorithms: ["HS256"],
 });
-
+// une route ou l'utilisateur peut poster un post en étant connecté 
 router.post("/poste", auth, async (req, res, next) => {
   let posteData;
+  // une constante qui recupere la date du jour
   const currentDate = new Date();
+  // une route qui va permettre la création de bot
   const isoDate = currentDate.toISOString();
   try {
     posteData = postValidation.parse(req.body);
   } catch (error) {
     return next(createHttpError(400, "Invalid data"));
   }
-
+// on crée le post en le liant à un l'id de l'utilisateur 
   await prisma.posts.create({
     data: {
       content: posteData.content,

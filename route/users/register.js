@@ -30,10 +30,13 @@ router.post("/register", async (req, res, next) => {
       email: registerData.email,
     },
   });
+  // si il y a un utilisateur avec ce mail alors ce compte existe déjà
   if (user) {
     return next(createHttpError(400, "Un compte existe déjà avec ce mail"));
   } else {
+    // on va sécurisé le mot de passe
     const hashedPassword = await bcrypt.hash(registerData.password, 10);
+    // on crée le compte de l'utilisateur
     await prisma.users
       .create({
         data: {
@@ -45,6 +48,7 @@ router.post("/register", async (req, res, next) => {
           point: 0,
         },
       })
+      // on signe le token
       .then((user) => {
         res.json({
           token: jwt.sign(

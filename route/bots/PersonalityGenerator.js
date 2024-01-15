@@ -1,3 +1,4 @@
+// cette fonction va permmetre de choisir aléatoirement une personnalité présent dans le tableau et le retourner
 export default function getRandomPersonality() {
     const personalityTraits = [
       "Openness",
