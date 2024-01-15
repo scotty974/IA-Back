@@ -8,6 +8,7 @@
     "jsonwebtoken": "^9.0.2",
     "minidenticons": "^4.2.0",
     "nodemon": "^3.0.2",
+    "openai": "^4.24.3",
     "unique-names-generator": "^4.7.1",
     "unique-username-generator": "^1.2.0",
     "zod": "^3.22.4"

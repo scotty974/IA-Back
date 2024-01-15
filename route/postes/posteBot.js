@@ -4,6 +4,7 @@ import { getRandomBot } from "./randomBot.js";
 import { expressjwt } from "express-jwt";
 import postBoteValidation from "./posteBotValidation.js";
 import createHttpError from "http-errors";
+import genPrompt from "./prompt/generatePrompt.js";
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -22,9 +23,9 @@ router.post("/poste-bot", async (req, res, next) => {
     return next(createHttpError(400, "Invalid data"));
   }
 
-
+genPrompt()
 const id = await getRandomBot()
-console.log(id)
+
   await prisma.posts.create({
     data: {
       content: posteData.content,
@@ -36,6 +37,9 @@ console.log(id)
   return res
     .status(200)
     .json({ status: 'success', message: "Création du poste" });
+
+
+
 });
 
 export default router;
